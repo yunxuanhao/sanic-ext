@@ -79,6 +79,8 @@ class Config(SanicConfig):
         ] = "templates",
         templating_enable_async: bool = True,
         trace_excluded_headers: Sequence[str] = ("authorization", "cookie"),
+        prometheus: bool = True,
+        prometheus_uri_to_metrics: str = "/metrics",
         **kwargs,
     ):
         self.CORS = cors
@@ -139,6 +141,8 @@ class Config(SanicConfig):
         self.TEMPLATING_PATH_TO_TEMPLATES = templating_path_to_templates
         self.TEMPLATING_ENABLE_ASYNC = templating_enable_async
         self.TRACE_EXCLUDED_HEADERS = trace_excluded_headers
+        self.PROMETHEUS = prometheus
+        self.PROMETHEUS_URI_TO_METRICS = prometheus_uri_to_metrics
 
         if isinstance(self.TRACE_EXCLUDED_HEADERS, str):
             self.TRACE_EXCLUDED_HEADERS = tuple(

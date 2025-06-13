@@ -25,6 +25,7 @@ from sanic_ext.extensions.injection.registry import (
 from sanic_ext.extensions.logging.extension import LoggingExtension
 from sanic_ext.extensions.openapi.builders import SpecificationBuilder
 from sanic_ext.extensions.openapi.extension import OpenAPIExtension
+from sanic_ext.extensions.prometheus.extension import PrometheusExtension
 from sanic_ext.utils.string import camel_to_snake
 from sanic_ext.utils.version import get_version
 
@@ -100,6 +101,7 @@ class Extend:
                     HTTPExtension,
                     HealthExtension,
                     LoggingExtension,
+                    PrometheusExtension,
                 ]
             )
 
