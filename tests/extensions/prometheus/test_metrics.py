@@ -36,7 +36,7 @@ def call_path(app: Sanic, path: str, method: str = "get"):
 def counter_app_multiproc():
     """ Create a Sanic app with Prometheus metrics for multiprocess testing """
     app = Sanic("counter_app_multiproc")
-    Extend(app)
+    Extend(app, config={"prometheus": True})
 
     @app.get("/test1")
     async def handler1(request: Request):
@@ -77,19 +77,24 @@ def start_server():
     process.terminate()
     process.wait()
 
-def test_single_process_metrics(app: Sanic):
+@pytest.fixture
+def prometheus_app(bare_app: Sanic):
+    Extend(bare_app, config={"prometheus": True})
+    yield bare_app
+
+def test_single_process_metrics(prometheus_app: Sanic):
     """ test single process metrics """
 
-    @app.get("/test1")
+    @prometheus_app.get("/test1")
     async def handler1(request: Request):
         counter.labels("test1", "label1").inc(1)
         return text("ok")
 
     call_count = 20
     for _ in range(call_count):
-        call_path(app, "/test1")
+        call_path(prometheus_app, "/test1")
 
-    res = get_metrics(app)
+    res = get_metrics(prometheus_app)
     except_metrics = (
         'event_counter_total{counter_name="test1",label="label1"} '
         + str(call_count) + '.0'

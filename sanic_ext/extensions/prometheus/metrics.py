@@ -10,8 +10,6 @@ try:
 except ImportError:
     prometheus = None
 
-from prometheus_client import CollectorRegistry, core, multiprocess
-from prometheus_client.exposition import generate_latest
 from sanic import Sanic, response
 from sanic.log import logger
 

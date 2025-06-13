@@ -79,7 +79,7 @@ class Config(SanicConfig):
         ] = "templates",
         templating_enable_async: bool = True,
         trace_excluded_headers: Sequence[str] = ("authorization", "cookie"),
-        prometheus: bool = True,
+        prometheus: bool = False,
         prometheus_uri_to_metrics: str = "/metrics",
         **kwargs,
     ):
